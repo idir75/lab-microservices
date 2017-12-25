@@ -1,6 +1,7 @@
 package ida.microservices.book.multiplication.service;
 
 import ida.microservices.book.multiplication.domain.Multiplication;
+import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
 
 public interface MultiplicationService {
 
@@ -10,4 +11,5 @@ public interface MultiplicationService {
      */
     Multiplication createRandomMultiplication();
 
+    boolean checkAttempt(final MultiplicationResultAttempt resultAttempt);
 }

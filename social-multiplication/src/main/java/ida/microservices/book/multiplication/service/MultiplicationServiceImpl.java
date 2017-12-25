@@ -1,6 +1,7 @@
 package ida.microservices.book.multiplication.service;
 
 import ida.microservices.book.multiplication.domain.Multiplication;
+import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,11 @@ public class MultiplicationServiceImpl implements  MultiplicationService {
         int factorA = randomGeneratorService.generateRandomFactor();
         int factorB = randomGeneratorService.generateRandomFactor();
         return new Multiplication(factorA, factorB);
+    }
+
+    @Override
+    public boolean checkAttempt(final MultiplicationResultAttempt resultAttempt) {
+        return resultAttempt.getResultAttempt() == resultAttempt.getMultiplication().getFactorA() * resultAttempt.getMultiplication().getFactorB();
     }
 }
 
