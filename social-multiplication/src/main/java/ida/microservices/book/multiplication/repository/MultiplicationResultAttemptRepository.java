@@ -1,0 +1,17 @@
+package ida.microservices.book.multiplication.repository;
+
+import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
+import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
+
+/**
+ * Extends CrudRepository, an interface provided by Spring Data JPA
+ */
+public interface MultiplicationResultAttemptRepository extends CrudRepository<MultiplicationResultAttempt, Long> {
+
+    /**
+     * @return the latest 5 attempts for a given user identified by their alias.
+     */
+    List<MultiplicationResultAttempt> findTop5ByUserAliasOrderByIdDesc(String userAlias);
+}

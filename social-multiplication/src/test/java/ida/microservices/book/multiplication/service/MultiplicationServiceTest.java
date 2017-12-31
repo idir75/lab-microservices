@@ -1,6 +1,8 @@
 package ida.microservices.book.multiplication.service;
 
 import ida.microservices.book.multiplication.domain.Multiplication;
+import ida.microservices.book.multiplication.repository.MultiplicationResultAttemptRepository;
+import ida.microservices.book.multiplication.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +21,18 @@ public class MultiplicationServiceTest {
     @Mock
     private RandomGeneratorService randomGeneratorService;
 
+    @Mock
+    private MultiplicationResultAttemptRepository attemptRepository;
+
+    @Mock
+    private UserRepository userRepository;
+
     private MultiplicationServiceImpl multiplicationServiceImpl;
 
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService);
+        multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository);
     }
 
     @Test

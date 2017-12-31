@@ -3,6 +3,8 @@ package ida.microservices.book.multiplication.service;
 import ida.microservices.book.multiplication.domain.Multiplication;
 import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
 
+import java.util.List;
+
 public interface MultiplicationService {
 
     /**
@@ -12,4 +14,6 @@ public interface MultiplicationService {
     Multiplication createRandomMultiplication();
 
     boolean checkAttempt(final MultiplicationResultAttempt resultAttempt);
+
+    List<MultiplicationResultAttempt> getStatsForUser(String userAlias);
 }
