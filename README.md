@@ -27,3 +27,5 @@ Ajout de la couche de persistence de données
 * Configuration de la base de données H2 : console http://localhost:8080/h2-console/
 * Améliorations du modèle
 * Implémentation du repository : opérations CRUD par entité
+
+Maintenant, nous allons implémenter les microservices de l'application
