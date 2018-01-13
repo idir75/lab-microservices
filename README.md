@@ -1,5 +1,6 @@
 Ce lab a pour objectif la création d'une application de microservices
 
+Nous allons commencer par la réaltion d'une application web classique (monolithique)
 Première application avec Spring Boot
 * Initialiser l'application web avec Spring boot
 * Création du service
