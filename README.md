@@ -24,4 +24,4 @@ Ajout de la couche de persistence de données
 * Utilisation de Hibernate avec JPA pour la persistence des données
 * Configuration de la base de données H2
 * Améliorations du modèle
-* Implémentation du repository : classes permettant d'effectuer les opérations CRUD par entité
+* Implémentation du repository : opérations CRUD par entité
