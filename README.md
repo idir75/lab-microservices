@@ -5,11 +5,12 @@ Première application avec Spring Boot
 * Création du service
 * Ajout des tests unitaires avec Mockito
 * Lancement de l'application avec la commande : mvnw spring-boot:run
+* L'application se lance sur http://localhost:8080/index.html
 
-Amélioration du domaine
-Amélioration des tests unitaires
+Compléter l'implémentation du domaine
+Compléter l'implémentation des tests unitaires
 Integration de lombok
-* Installation du plugin Lombok dans Intellij
+* Installation du plugin Lombok dans IntelliJ
 
 Implémentation de la logique business
 Implémentation de la couche Présentation (API REST)
@@ -22,6 +23,6 @@ Ajout du client web
 
 Ajout de la couche de persistence de données
 * Utilisation de Hibernate avec JPA pour la persistence des données
-* Configuration de la base de données H2
-* Améliorations du modèle
+* Configuration de la base de données H2 : console 
+* Compléter l'implémentation du modèle
 * Implémentation du repository : classes permettant d'effectuer les opérations CRUD par entité
