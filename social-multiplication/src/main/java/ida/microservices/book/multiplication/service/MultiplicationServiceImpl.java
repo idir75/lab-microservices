@@ -3,6 +3,8 @@ package ida.microservices.book.multiplication.service;
 import ida.microservices.book.multiplication.domain.Multiplication;
 import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import ida.microservices.book.multiplication.domain.User;
+import ida.microservices.book.multiplication.event.EventDispatcher;
+import ida.microservices.book.multiplication.event.MultiplicationSolvedEvent;
 import ida.microservices.book.multiplication.repository.MultiplicationResultAttemptRepository;
 import ida.microservices.book.multiplication.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,15 +21,17 @@ public class MultiplicationServiceImpl implements MultiplicationService {
     private RandomGeneratorService randomGeneratorService;
     private MultiplicationResultAttemptRepository attemptRepository;
     private UserRepository userRepository;
-
+    private EventDispatcher eventDispatcher;
 
     @Autowired
     public MultiplicationServiceImpl(final RandomGeneratorService randomGeneratorService,
                                      final MultiplicationResultAttemptRepository attemptRepository,
-                                     final UserRepository userRepository) {
+                                     final UserRepository userRepository,
+                                     final EventDispatcher eventDispatcher) {
         this.randomGeneratorService = randomGeneratorService;
         this.attemptRepository = attemptRepository;
         this.userRepository = userRepository;
+        this.eventDispatcher = eventDispatcher;
     }
 
     @Override
@@ -54,6 +58,11 @@ public class MultiplicationServiceImpl implements MultiplicationService {
 
         attemptRepository.save(checkedAttempt);
 
+        // Communicates the result via Event
+        eventDispatcher.send(new MultiplicationSolvedEvent(
+                checkedAttempt.getId(),
+                checkedAttempt.getUser().getId(),
+                checkedAttempt.isCorrect()));
         return correct;
     }
 

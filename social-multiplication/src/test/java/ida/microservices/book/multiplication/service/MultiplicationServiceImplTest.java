@@ -3,6 +3,7 @@ package ida.microservices.book.multiplication.service;
 import ida.microservices.book.multiplication.domain.Multiplication;
 import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import ida.microservices.book.multiplication.domain.User;
+import ida.microservices.book.multiplication.event.EventDispatcher;
 import ida.microservices.book.multiplication.repository.MultiplicationResultAttemptRepository;
 import ida.microservices.book.multiplication.repository.UserRepository;
 import org.assertj.core.util.Lists;
@@ -12,6 +13,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
+import java.awt.*;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,10 +35,13 @@ public class MultiplicationServiceImplTest {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private EventDispatcher eventDispatcher;
+
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-        multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository);
+        multiplicationServiceImpl = new MultiplicationServiceImpl(randomGeneratorService, attemptRepository, userRepository, eventDispatcher);
     }
 
     @Test
