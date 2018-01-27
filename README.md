@@ -34,8 +34,8 @@ Configuration de RabbitMQ
 * Modification du fichier pom.xml pour déclarer la dépendance au projet RabbitMQ. Pour cela :
 ```
 <dependency>
-<groupId>org.springframework.boot</groupId>
-<artifactId>spring-boot-starter-amqp</artifactId>
+ <groupId>org.springframework.boot</groupId>
+ <artifactId>spring-boot-starter-amqp</artifactId>
 </dependency>
 ```
 * Ajout de la classe de configuration RabbitMQConfiguration avec l'annotation @configuration. Celle-ci est utilisée par Spring pour générer les beans
@@ -44,9 +44,11 @@ Configuration de RabbitMQ
 Création du microservice de multiplication
 * MultiplicationSolvedEvent pour implémenter l'event de résolution d'une multiplication
 * EventDispatcher pour envoyer les events MultiplicationSolvedEvent
-* Modification du service MultiplicationServiceImpl pour envoyer l'event MultiplicationSolvedEvent avec le EventDispatcher :
+* Modification du service MultiplicationServiceImpl pour envoyer l'event MultiplicationSolvedEvent avec le EventDispatcher
+```
     eventDispatcher.send(new MultiplicationSolvedEvent(
                     checkedAttempt.getId(),
                     checkedAttempt.getUser().getId(),
                     checkedAttempt.isCorrect()));
+```
 * Mise à jour des tests unitaires
