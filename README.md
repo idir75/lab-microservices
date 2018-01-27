@@ -32,10 +32,12 @@ Maintenant, nous allons implémenter les microservices de l'application
 
 Configuration de RabbitMQ
 * Modification du fichier pom.xml pour déclarer la dépendance au projet RabbitMQ. Pour cela :
-* <dependency>
-* <groupId>org.springframework.boot</groupId>
-* <artifactId>spring-boot-starter-amqp</artifactId>
-* </dependency>
+```
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-amqp</artifactId>
+</dependency>
+```
 * Ajout de la classe de configuration RabbitMQConfiguration avec l'annotation @configuration. Celle-ci est utilisée par Spring pour générer les beans
 à l'initialisaton du contexte de l'application.
 
