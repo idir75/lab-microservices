@@ -90,4 +90,12 @@ public class MultiplicationResultAttemptControllerTest {
         assertThat(response.getStatus()).isEqualTo(HttpStatus.OK.value());
         assertThat(response.getContentAsString()).isEqualTo(jsonResultAttemptList.write(recentAttempts).getJson());
     }
+
+    @Test
+    public void getResultByIdTest() throws Exception {
+        User user = new User("ida");
+        Multiplication multiplication = new Multiplication(50, 70);
+        MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication, 3500, true);
+        //given(multiplicationService.getResultById(4L)).willReturn(attempt);
+    }
 }

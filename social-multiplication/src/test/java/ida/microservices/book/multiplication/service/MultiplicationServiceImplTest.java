@@ -4,6 +4,7 @@ import ida.microservices.book.multiplication.domain.Multiplication;
 import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
 import ida.microservices.book.multiplication.domain.User;
 import ida.microservices.book.multiplication.event.EventDispatcher;
+import ida.microservices.book.multiplication.event.MultiplicationSolvedEvent;
 import ida.microservices.book.multiplication.repository.MultiplicationResultAttemptRepository;
 import ida.microservices.book.multiplication.repository.UserRepository;
 import org.assertj.core.util.Lists;
@@ -20,6 +21,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.booleanThat;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.verify;
 
 public class MultiplicationServiceImplTest {
@@ -61,11 +63,14 @@ public class MultiplicationServiceImplTest {
         MultiplicationResultAttempt resultAttempt = new MultiplicationResultAttempt(user, multiplication, 3000, false);
         MultiplicationResultAttempt verifiedAttempt = new MultiplicationResultAttempt(user, multiplication, 3000, true);
 
+        MultiplicationSolvedEvent event = new MultiplicationSolvedEvent(resultAttempt.getId(), resultAttempt.getUser().getId(), true);
+
         given(userRepository.findByAlias(userAlias)).willReturn(Optional.empty());
 
         boolean attemptResult = multiplicationServiceImpl.checkAttempt(resultAttempt);
         assertThat(attemptResult).isTrue();
         verify(attemptRepository).save(verifiedAttempt);
+        verify(eventDispatcher).send(eq(event));
     }
 
     @Test
@@ -74,12 +79,13 @@ public class MultiplicationServiceImplTest {
         Multiplication multiplication = new Multiplication(50, 60);
         User user = new User(userAlias);
         MultiplicationResultAttempt attempt = new MultiplicationResultAttempt(user, multiplication,3010, false);
-
+        MultiplicationSolvedEvent event = new MultiplicationSolvedEvent(attempt.getId(), attempt.getUser().getId(), false);
         given(userRepository.findByAlias(userAlias)).willReturn(Optional.empty());
 
         boolean attemptResult = multiplicationServiceImpl.checkAttempt(attempt);
         assertThat(attemptResult).isFalse();
         verify(attemptRepository).save(attempt);
+        verify(eventDispatcher).send(eq(event));
     }
 
     @Test
