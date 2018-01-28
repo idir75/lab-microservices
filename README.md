@@ -56,3 +56,8 @@ Création du microservice de multiplication
 Implémentation du microservice Gamification
 * Création du projet Gamification avec Spring Initializr
 * Configuration des dépendances pour Lombock, H2, AMQP (comme cela a déjà été fait pour le projet précédent)
+* Optionnel : ajout du projet en tant que projet maven dans IntelliJ
+* Implémentation du domaine
+* Implémentation de modèle de données en utilisant JPQL
+* Implémentation de la logique métier
+* Implémentation de la réception des events avec RabbitMQ
