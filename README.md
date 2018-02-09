@@ -1,16 +1,16 @@
 Ce lab a pour objectif la création d'une application de microservices
 
-Nous allons commencer par la réaltion d'une application web classique (monolithique)
+Nous allons commencer par la réalisation d'une application web classique (monolithique)
 Première application avec Spring Boot
 * Initialiser l'application web avec Spring boot
 * Création du service
 * Ajout des tests unitaires avec le framework Mockito
 * Lancement de l'application avec la commande : `mvnw spring-boot:run`
-* Pour visualiser le résultat : `http://localhost:8080/index.html`
+* Aller sur : `http://localhost:8080/index.html`
 
 Implémentation du domaine
 Implémentation des tests unitaires
-Integration de lombok
+Integration de Lombok
 * Installation du plugin Lombok dans IntelliJ
 
 Implémentation de la logique business
@@ -57,7 +57,5 @@ Implémentation du microservice Gamification
 * Création du projet Gamification avec Spring Initializr
 * Configuration des dépendances pour Lombock, H2, AMQP (comme cela a déjà été fait pour le projet précédent)
 * Optionnel : ajout du projet en tant que projet maven dans IntelliJ
-* Implémentation du domaine
-* Implémentation de modèle de données en utilisant JPQL
-* Implémentation de la logique métier
-* Implémentation de la réception des events avec RabbitMQ
+* Implémentation du domaine, modèle de données en utilisant JPQL, logique métier et
+* Events avec RabbitMQ
