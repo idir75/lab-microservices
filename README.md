@@ -66,3 +66,18 @@ Test des events avec RabbitMQ
 Installation et configuration du serveur Jetty
 
 Autorisation du CORS (Cross-Origin Resource Sharing)
+
+Isolation de la couche UI dans une application séparée
+* Utilisation de Bootstrap
+
+Lancement des applications
+* Démarrer le broker RabbitMQ
+* Démarrer le microservice de multiplication
+* Démarrer le microservice de gamification
+* Lancer l'application UI avec Jetty
+```
+    java -jar [JETTY_HOME_FOLDER]/start.jar
+```
+
+TODO
+Utiliser les WebSockets pour les notifications serveur
