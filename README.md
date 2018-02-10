@@ -57,5 +57,12 @@ Implémentation du microservice Gamification
 * Création du projet Gamification avec Spring Initializr
 * Configuration des dépendances pour Lombock, H2, AMQP (comme cela a déjà été fait pour le projet précédent)
 * Optionnel : ajout du projet en tant que projet maven dans IntelliJ
-* Implémentation du domaine, modèle de données en utilisant JPQL, logique métier et
-* Events avec RabbitMQ
+* Implémentation du domaine, du modèle de données en utilisant JPQL ainsi que la logique métier
+* Implémentation de la réception des events avec RabbitMQ
+
+Installation de RabbitMQ
+Test des events avec RabbitMQ
+
+Installation et configuration du serveur Jetty
+
+Autorisation du CORS (Cross-Origin Resource Sharing)
