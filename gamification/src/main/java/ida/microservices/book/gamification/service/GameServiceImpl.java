@@ -1,6 +1,8 @@
 package ida.microservices.book.gamification.service;
 
 
+import ida.microservices.book.gamification.client.MultiplicationResultAttemptClient;
+import ida.microservices.book.gamification.client.dto.MultiplicationResultAttempt;
 import ida.microservices.book.gamification.domain.Badge;
 import ida.microservices.book.gamification.domain.BadgeCard;
 import ida.microservices.book.gamification.domain.GameStats;
@@ -21,10 +23,13 @@ public class GameServiceImpl implements GameService {
 
     private ScoreCardRepository scoreCardRepository;
     private BadgeCardRepository badgeCardRepository;
+    private MultiplicationResultAttemptClient attemptClient;
+    private static final int LUCKY_NUMBER = 42;
 
-    GameServiceImpl(ScoreCardRepository scoreCardRepository, BadgeCardRepository badgeCardRepository) {
+    GameServiceImpl(ScoreCardRepository scoreCardRepository, BadgeCardRepository badgeCardRepository, MultiplicationResultAttemptClient attemptClient) {
         this.scoreCardRepository = scoreCardRepository;
         this.badgeCardRepository = badgeCardRepository;
+        this.attemptClient = attemptClient;
     }
 
     @Override
@@ -59,6 +64,14 @@ public class GameServiceImpl implements GameService {
         if(scoreCardList.size() == 1 && !containsBadge(badgeCardList, Badge.FIRST_WON)) {
             BadgeCard firstWonBadge = giveBadgeToUser(Badge.FIRST_WON, userId);
             badgeCards.add(firstWonBadge);
+        }
+
+        //Lucky number badge
+        MultiplicationResultAttempt attempt = attemptClient.retrieveMultiplicationResultAttemptById(attemptId);
+        if(!containsBadge(badgeCardList, Badge.LUCKY_NUMBER) &&
+                (LUCKY_NUMBER == attempt.getMultiplicationFactorA() || LUCKY_NUMBER == attempt.getMultiplicationFactorB())) {
+            BadgeCard luckyNumberBadge = giveBadgeToUser(Badge.LUCKY_NUMBER, userId);
+            badgeCards.add(luckyNumberBadge);
         }
         return badgeCards;
     }

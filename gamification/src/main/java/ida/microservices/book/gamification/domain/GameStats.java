@@ -9,13 +9,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * This object contains the result of one or many iterations of the game.
- * It may contain any combination of {@link ScoreCard} objects and {@link BadgeCard} objects.
- *
- * It can be used as a delta (as a single game iteration) or to represent the total amount of score / badges.
- */
-
 @RequiredArgsConstructor
 @Getter
 @ToString

@@ -41,7 +41,7 @@ Configuration de RabbitMQ
 * Ajout de la classe de configuration `RabbitMQConfiguration` avec l'annotation `@configuration`. Celle-ci est utilisée par Spring pour générer les beans
 à l'initialisaton du contexte de l'application.
 
-Création du microservice de multiplication
+Implémentation du microservice Multiplication
 * `MultiplicationSolvedEvent` pour implémenter l'event de résolution d'une multiplication
 * `EventDispatcher` pour envoyer les events `MultiplicationSolvedEvent`
 * Modification du service `MultiplicationServiceImpl` pour envoyer l'event `MultiplicationSolvedEvent` avec le `EventDispatcher`
