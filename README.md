@@ -87,10 +87,11 @@ Service Discovery avec Eureka
 * Principe : un mécanisme permettant à un service de communiquer avec un autre service sans passer par un lien en dur
     (exemple : un service invoquant un autre service par son adresse ip est un lien en dur entre les deux services).
 * Fonctionnement:
-** Service Registry
-** Registry Agent
-** Registry Client
-Au démarrage d'un service, celui-ci s'enregistre auprès du Service Registry avec le Rregistry Agent.
+  * Service Registry
+  * Registry Agent
+  * Registry Client
+
+Au démarrage d'un service, celui-ci s'enregistre auprès du Service Registry avec le Registry Agent.
 Il obtient alors un alias (qui est par défaut le nom du service) permettant de l'identifier. Les services sont identifiés par des adresses constitués de leur alias (http://multiplication/ ou http://gamification/) et non plus avec les URLS.
 Le Registry Client permet de retrouver l'URL d'un service avec son alias.
 
