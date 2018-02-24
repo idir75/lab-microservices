@@ -61,10 +61,13 @@ Implémentation du microservice Gamification
 * Implémentation de la réception des events avec RabbitMQ
 
 Installation de RabbitMQ
+* Installation : https://cmatskas.com/getting-started-with-rabbitmq-on-windows/
 * Configuration de la console d'admin web (URL http://localhost:15672)
 Test des events avec RabbitMQ
 
 Installation et configuration du serveur Jetty
+* Modifier le port par défaut dans le fichier /[JETTY_HOME_FOLDER]/start.ini
+* https://examples.javacodegeeks.com/enterprise-java/jetty/jetty-tutorial-beginners/
 
 Autorisation du CORS (Cross-Origin Resource Sharing)
 
@@ -122,6 +125,27 @@ Implémentation de l'API Gateway avec Zuul
     	}
     }
 ```
-* Renommer le fichier `application.properties` en `application.yml` pour pouvoir utiliser l'utiliser comme fichier de description YAML
+* Renommer le fichier `application.properties` en `application.yml` pour pouvoir l'utiliser comme fichier de description YAML
 
+Implémentation du Service Discovery avec Eureka
+* Service Registry : création d'une application Spring Boot pour le serveur de registry d'Eureka
+* Configuration de l'application de service registry Eureka
+```
+    @EnableEurekaServer
+    @SpringBootApplication
+    public class ServiceRegistryApplication {
 
+        public static void main(String[] args) {
+            SpringApplication.run(ServiceRegistryApplication.class, args);
+        }
+    }
+```
+* Modification du port par défaut du Service Registry : port 8761 au lieu du port 8080. 
+La raison est que Eureka s'enregistre en tant que service en utilisant le port 8761 par défaut.
+* Configuration des autres services (Multiplication, gamification et gateway) pour utiliser le Service Registry comme client
+  * Mise à jour des dépendances dans les pom.xml
+  * Ajouter l'annotation `@EnableEurekaClient` aux services clients du Service Registry
+  * Configurer l'URL du Service Registry dans les fichiers application.properties
+  * Configurer le nom de chaque service dans un nouveau fichier bootstrap.properties.
+  Le nom du service est ainsi paramétré de façon unique et n'est pas attribué autmatiquement.
+  
