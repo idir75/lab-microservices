@@ -11,7 +11,7 @@ Nous allons commencer par la réalisation d'une application web classique (monol
 
 ## Implémentation du domaine
 ## Implémentation des tests unitaires
-## Integration de Lombok
+## Intégration de Lombok
 * Installation du plugin Lombok dans IntelliJ
 
 ## Implémentation de la logique métier
@@ -32,7 +32,7 @@ Nous allons commencer par la réalisation d'une application web classique (monol
 Maintenant, nous allons implémenter les microservices de l'application.
 
 # Microservices
-## Configuration de RabbitMQ
+## Configuration de `RabbitMQ`
 * Modification du fichier pom.xml pour déclarer la dépendance au projet RabbitMQ. Pour cela :
 ```
 <dependency>
@@ -101,8 +101,6 @@ Au démarrage d'un service, celui-ci s'enregistre auprès du Service Registry av
 Il obtient alors un alias (qui est par défaut le nom du service) permettant de l'identifier. Les services sont identifiés par des adresses constitués de leur alias (http://multiplication/ ou http://gamification/) et non plus avec les URLS.
 Le Registry Client permet de retrouver l'URL d'un service avec son alias.
 
-## Load Balancing avec `Ribbon`
-
 ## API Gateway Pattern avec `Zuul`
 ### Principe 
 Offrir une API indépendante des détails d'implémentation des services. Cela permet de modifier les services sans impacter l'API.
@@ -151,4 +149,14 @@ La raison est que Eureka s'enregistre en tant que service en utilisant le port 8
   * Configurer l'URL du Service Registry dans les fichiers application.properties
   * Configurer le nom de chaque service dans un nouveau fichier bootstrap.properties.
   Le nom du service est ainsi paramétré de façon unique et n'est pas attribué autmatiquement.
-  
+* Console d'admi Eureka : http://localhost:8761/
+
+## Load Balancing avec `Ribbon`
+Pour lancer une autre instance `social-multiplication`, il faut ouvrir un nouveau invit de commande et lancer la commande : mvnw spring-boot:run -Drun.arguments="--server.port=8180"
+
+Stratégie de load balancing utilisée par défaut : `RoundRobinRule`.
+Pour modifier cette statégie, pour notamment permettre au load balancer de détecter les instances arrêtées, on crée une nouvelle configuration `RibbonConfiguration` au niveau du service gateway utilisant la stratégie `AvailabilityFilteringRule`.
+Cette configuration sera utilisée dans la configuration de la `GatewayApplication` avec l'annotation 
+```
+@RibbonClients(defaultConfiguration = RibbonConfiguration.class)
+```
