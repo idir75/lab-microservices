@@ -152,7 +152,10 @@ La raison est que Eureka s'enregistre en tant que service en utilisant le port 8
 * Console d'admi Eureka : http://localhost:8761/
 
 ## Load Balancing avec `Ribbon`
-Pour lancer une autre instance `social-multiplication`, il faut ouvrir un nouveau invit de commande et lancer la commande : mvnw spring-boot:run -Drun.arguments="--server.port=8180"
+Pour lancer une autre instance `social-multiplication`, il faut ouvrir un nouveau invit de commande et lancer la commande
+```
+mvnw spring-boot:run -Drun.arguments="--server.port=8180"
+```
 
 Stratégie de load balancing utilisée par défaut : `RoundRobinRule`.
 Pour modifier cette statégie, pour notamment permettre au load balancer de détecter les instances arrêtées, on crée une nouvelle configuration `RibbonConfiguration` au niveau du service gateway utilisant la stratégie `AvailabilityFilteringRule`.
@@ -160,3 +163,43 @@ Cette configuration sera utilisée dans la configuration de la `GatewayApplicati
 ```
 @RibbonClients(defaultConfiguration = RibbonConfiguration.class)
 ```
+
+## Circuit breakers avec `Hystrix`
+
+### Principe du pattern Circuit Breakers
+Circuit fermé : le système ne contient pas de partie hors service. Rien à faire.
+Circuit ouvert : une partie du système est hors service, il faut donc rediriger vers d'autres parties du système qui jouent le rôle de backup.
+Outil : Hystrix
+
+Pour connecter Zuul avec Hystrix, on implémente le bean `ZuulFallbackProvider` qui sera injecté comme dépendance dans le projet Gateway.
+Ce bean construit la réponse par défaut qui est retournée quand un service n'est pas accessible.
+La configuration de ce bean est faite dans `HystrixFallbackConfiguration`.
+
+Le header de la réponse est construit dans la méthode `getHeaders`, avec la gestion du CORS.
+La réponse est retournée dans la méthode `getBody()`.
+```
+@Configuration
+public class HystrixFallbackConfiguration {
+
+    @Bean
+    public ZuulFallbackProvider zuulFallbackProvider() {
+        return new ZuulFallbackProvider() {
+            ...
+            @Override
+            public InputStream getBody() throws IOException {
+                return new ByteArrayInputStream("{\"factorA\":\"Sorry, Service is Down!\",\"factorB\":\"?\",\"id\":null}".getBytes());
+            }
+            @Override
+            public HttpHeaders getHeaders() {
+                HttpHeaders headers = new HttpHeaders();
+                headers.setContentType(MediaType.APPLICATION_JSON);
+                headers.setAccessControlAllowCredentials(true);
+                headers.setAccessControlAllowOrigin("*");
+                return headers;
+            }
+        };
+    }
+```
+
+Pour tester le fonctionnement de `Hystrix`, démarrer les différents services, et démarrer deux instances de Multiplication. 
+Après avoir vérifié le bon fonctionnement du load-balancing, arrêter une des instances de Multiplication. En testant de résoudre une multiplication, le système retourne le message d'erreur `"Sorry, Service is Down!"`
