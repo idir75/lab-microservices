@@ -202,4 +202,45 @@ public class HystrixFallbackConfiguration {
 ```
 
 Pour tester le fonctionnement de `Hystrix`, démarrer les différents services, et démarrer deux instances de Multiplication. 
-Après avoir vérifié le bon fonctionnement du load-balancing, arrêter une des instances de Multiplication. En testant de résoudre une multiplication, le système retourne le message d'erreur `"Sorry, Service is Down!"`
+Après avoir vérifié le bon fonctionnement du load-balancing, arrêter une des instances de Multiplication. En testant de résoudre une multiplication, le système retourne le message d'erreur `"Sorry, Service is Down!"`.
+
+### `Hystrix` avec un client REST
+Il est possible d'utiliser le principe de Circuit Breaker dans le cas d'un appel REST. Exemple : appel depuis le service Gamification vers le service Multiplication pour vérifier si un facteur est un nombre magique ou pas.
+Ajouter Hystrix comme dépendance du service Gamification:
+```
+<dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-hystrix</artifactId>
+</dependency>
+```
+
+Modifier la méthodeo `retrieveMultiplicationResultAttemptById` dans la classe `MultiplicationResultAttemptClientImpl:
+```
+@HystrixCommand(fallbackMethod = "defaultResult")
+@Override
+public MultiplicationResultAttempt retrieveMultiplicationResultAttemptById(final Long multiplicationResultAttemptId) {
+    return restTemplate.getForObject(multiplicationHost + "/results" + multiplicationResultAttemptId, MultiplicationResultAttempt.class);
+}
+```
+
+En cas d'indisponibilité de service, la méthode `defaultResult` est appelée.
+```
+private MultiplicationResultAttempt defaultResult(final  Long multiplicationResultAttemptId) {
+    return new MultiplicationResultAttempt("fakeAlias", 10, 10, 100, true);
+}
+```
+
+Il faut aussi ajouter l'annotation `@EnableCircuitBreaker` au service (classe GamificationApplication)
+
+```
+@EnableCircuitBreaker
+@EnableEurekaClient
+@SpringBootApplication
+public class GamificationApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(GamificationApplication.class, args);
+    }
+}
+```
+
+### Consommateur REST avec `Feign`
