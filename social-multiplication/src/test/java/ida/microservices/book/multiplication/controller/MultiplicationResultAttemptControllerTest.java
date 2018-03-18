@@ -3,7 +3,6 @@ package ida.microservices.book.multiplication.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import ida.microservices.book.multiplication.domain.Multiplication;
 import ida.microservices.book.multiplication.domain.MultiplicationResultAttempt;
-import static ida.microservices.book.multiplication.controller.MultiplicationResultAttemptController.ResultResponse;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Matchers.any;

@@ -27,13 +27,6 @@ final class MultiplicationResultAttemptController {
         this.serverPort = serverPort;
     }
 
-    @RequiredArgsConstructor
-    @NoArgsConstructor(force = true)
-    @Getter
-    static final class ResultResponse {
-        private final boolean correct;
-    }
-
     @PostMapping
     ResponseEntity<MultiplicationResultAttempt> postResult(@RequestBody MultiplicationResultAttempt multiplicationResultAttempt) {
         boolean isCorrect = multiplicationService.checkAttempt(multiplicationResultAttempt);

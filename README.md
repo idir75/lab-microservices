@@ -104,7 +104,7 @@ Le Registry Client permet de retrouver l'URL d'un service avec son alias.
 ## API Gateway Pattern avec `Zuul`
 ### Principe 
 Offrir une API indépendante des détails d'implémentation des services. Cela permet de modifier les services sans impacter l'API.
-L'API reste insensible aux changements internes, et les clients de l'API n'ont pas connaissances des services qu'ils utilisent.
+L'API reste insensible aux changements internes, et les clients de l'API n'ont pas connaissance des services qu'ils utilisent.
 L'API gateway (passerelle de l'API) permet de diriger les requêtes vers les services en se basant sur une table de routage.
 
 ## Fonctionnement de `Zuul`, `Eureka` et `Ribbon`
@@ -243,4 +243,4 @@ public class GamificationApplication {
 }
 ```
 
-### Consommateur REST avec `Feign`
+### Client REST avec `Feign`
